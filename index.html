@@ -65,43 +65,43 @@
 		}
 		
 		.rgba1 {
-			background: rgba(246, 212, 216, 1.0);
+			background: rgba(246,212,216,1.0);
 		}
 		
 		.rgba2 {
-			background: rgba(252, 241, 211, 1.0);
+			background: rgba(252,241,211,1.0);
 		}
 		
 		.rgba3 {
-			background: rgba(255, 251, 213, 1.0);
+			background: rgba(255,251,213,1.0);
 		}
 		
 		.rgba4 {
-			background: rgba(238, 245, 211, 1.0);
+			background: rgba(238,245,211,1.0);
 		}
 		
 		.rgba5 {
-			background: rgba(198, 237, 219, 1.0);
+			background: rgba(198,237,219,1.0);
 		}
 		
 		.rgba6 {
-			background: rgba(201, 232, 241, 1.0);
+			background: rgba(201,232,241,1.0);
 		}
 		
 		.rgba7 {
-			background: rgba(203, 230, 243, 1.0);
+			background: rgba(203,230,243,1.0);
 		}
 		
 		.rgba8 {
-			background: rgba(222, 223, 239, 1.0);
+			background: rgba(222,223,239,1.0);
 		}
 		
 		.rgba9 {
-			background: rgba(237, 208, 229, 1.0);
+			background: rgba(237,208,229,1.0);
 		}
 		
 		.rgba10 {
-			background: rgba(243, 209, 229, 1.0);
+			background: rgba(243,209,229,1.0);
 		}
 	</style>
 </head>
@@ -114,43 +114,43 @@
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex1">#f6d4d8</div>
-			<div class="span6 box rgba rgba1">rgba(246, 212, 216, 1.0)</div>
+			<div class="span6 box rgba rgba1">rgba(246,212,216,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex2">#fcf1d3</div>
-			<div class="span6 box rgba rgba2">rgba(252, 241, 211, 1.0)</div>
+			<div class="span6 box rgba rgba2">rgba(252,241,211,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex3">#fffbd5</div>
-			<div class="span6 box rgba rgba3">rgba(255, 251, 213, 1.0)</div>
+			<div class="span6 box rgba rgba3">rgba(255,251,213,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex4">#eef5d3</div>
-			<div class="span6 box rgba rgba4">rgba(238, 245, 211, 1.0)</div>
+			<div class="span6 box rgba rgba4">rgba(238,245,211,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex5">#c6eddb</div>
-			<div class="span6 box rgba rgba5">rgba(198, 237, 219, 1.0)</div>
+			<div class="span6 box rgba rgba5">rgba(198,237,219,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex6">#c9e8f1</div>
-			<div class="span6 box rgba rgba6">rgba(201, 232, 241, 1.0)</div>
+			<div class="span6 box rgba rgba6">rgba(201,232,241,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex7">#cbe6f3</div>
-			<div class="span6 box rgba rgba7">rgba(203, 230, 243, 1.0)</div>
+			<div class="span6 box rgba rgba7">rgba(203,230,243,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex8">#dedfef</div>
-			<div class="span6 box rgba rgba8">rgba(222, 223, 239, 1.0)</div>
+			<div class="span6 box rgba rgba8">rgba(222,223,239,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex9">#edd0e5</div>
-			<div class="span6 box rgba rgba9">rgba(237, 208, 229, 1.0)</div>
+			<div class="span6 box rgba rgba9">rgba(237,208,229,1.0)</div>
 		</div>
 		<div class="row">
 			<div class="span6 box hex hex10">#f3d1e5</div>
-			<div class="span6 box rgba rgba10">rgba(243, 209, 229, 1.0)</div>
+			<div class="span6 box rgba rgba10">rgba(243,209,229,1.0)</div>
 		</div>
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
@@ -165,24 +165,37 @@
 				, step: 0.1
 				, value: 1.0
 				, slide: function(event, ui) {
-					//console.log(ui.value);
 					var hex = $('body').find('.hex');
 					var rgba = $('body').find('.rgba');
 					
-					/*
-					for (i=0; i<rgba.length; i++) {
-						var css = $(rgba[i]).css('background');
-						console.log(i + " : " + css);
-					}
-					*/
-					
-					for (i=1; i<11; i++) {
-						var bg = $('.rgba' + i).css('background-color');
-						
+					for (i = 0; i < rgba.length; i++) {
+						var colors = GetColors($(rgba[i]).text());
+						//var rgba = GetRGBA(colors['r'], colors['g'], colors['b'], ui.value);
+						var r = colors['r'];
+						var g = colors['g'];
+						var b = colors['b'];
+						var rgba = 'rgba(' + r + ',' + g + ',' + b + ',' + ui.value + ')';
+						//$(rgba[i]).css('background-color', rgba).text(rgba);
+						//console.log(colors['r']);
+						//console.log(colors['g']);
+						//console.log(colors['b']);
+						//console.log('');
+						//console.log(colors);
+						console.log(rgba);
 					}
 				}
 			});
-			
+
+			function GetRGBA(r, g, b, a) {
+				return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
+			}
+		
+			function GetColors(rgba) {
+				var x = rgba.replace('rgba(', '').replace(')', '').split(',');
+				var colors = {'r': x[0], 'g': x[1], 'b': x[2], 'a': x[3]};
+				return colors;
+			}
+				
 		});
 	</script>
 </body>
