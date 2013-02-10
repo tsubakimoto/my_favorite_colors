@@ -1,163 +1,35 @@
 ﻿<!DOCTYPE HTML>
 <html lang="ja">
-<head>
-	<meta charset="UTF-8">
-	<title>My Favorite Colors</title>
-	<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-	<link rel="stylesheet" type="text/css" href="css/index.css" media="all" />
-</head>
-<body>
-	<div class="container color-area">
-		<div class="row">
-			<div class="span12">
-				<div id="slider-range-min"></div>
-			</div>
-		</div>
-		<!--
-		<div class="row">
-			<div class="span6 box hex hex1">#f6d4d8</div>
-			<div class="span6 box rgba rgba1">rgba(246,212,216,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex2">#fcf1d3</div>
-			<div class="span6 box rgba rgba2">rgba(252,241,211,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex3">#fffbd5</div>
-			<div class="span6 box rgba rgba3">rgba(255,251,213,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex4">#eef5d3</div>
-			<div class="span6 box rgba rgba4">rgba(238,245,211,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex5">#c6eddb</div>
-			<div class="span6 box rgba rgba5">rgba(198,237,219,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex6">#c9e8f1</div>
-			<div class="span6 box rgba rgba6">rgba(201,232,241,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex7">#cbe6f3</div>
-			<div class="span6 box rgba rgba7">rgba(203,230,243,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex8">#dedfef</div>
-			<div class="span6 box rgba rgba8">rgba(222,223,239,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex9">#edd0e5</div>
-			<div class="span6 box rgba rgba9">rgba(237,208,229,1.0)</div>
-		</div>
-		<div class="row">
-			<div class="span6 box hex hex10">#f3d1e5</div>
-			<div class="span6 box rgba rgba10">rgba(243,209,229,1.0)</div>
-		</div>
-		-->
-	</div>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-	<script type="text/javascript">
-		$(function() {
-			
-			$(function() {
-				var hex = new Array(
-					'#f6d4d8'
-					, '#fcf1d3'
-					, '#fffbd5'
-					, '#eef5d3'
-					, '#c6eddb'
-					, '#c9e8f1'
-					, '#cbe6f3'
-					, '#dedfef'
-					, '#edd0e5'
-					, '#f3d1e5'
-				);
-				
-				var rgba = new Array(
-					'rgba(246, 212, 216, 1.0)'
-					, 'rgba(252, 241, 211, 1.0)'
-					, 'rgba(255, 251, 213, 1.0)'
-					, 'rgba(238, 245, 211, 1.0)'
-					, 'rgba(198, 237, 219, 1.0)'
-					, 'rgba(201, 232, 241, 1.0)'
-					, 'rgba(203, 230, 243, 1.0)'
-					, 'rgba(222, 223, 239, 1.0)'
-					, 'rgba(237, 208, 229, 1.0)'
-					, 'rgba(243, 209, 229, 1.0)'
-				);
-				
-				for (var i = 0; i < rgba.length - 1; i++) {
-					var hexClass = 'hex' + (i + 1);
-					var rgbaClass = 'rgba' + (i + 1);
-					var divRow = "<div class='row'><div class='span6 box hex " + hexClass + "'></div><div class='span6 box rgba " + rgbaClass + "'></div>";
-					
-					$('.color-area').append(divRow);
-					$('.' + hexClass).text(hex[i]).css('background-color', hex[i]);
-					$('.' + rgbaClass).text(rgba[i]).css('background-color', rgba[i]);
-				}
-			});
-			
-			$('#slider-range-min').slider({
-				range: 'min'
-				, min: 0.0
-				, max: 1.0
-				, step: 0.1
-				, value: 1.0
-				, slide: function(event, ui) {
-					var hex = $('body').find('.hex');
-					var rgba = $('body').find('.rgba');
-					
-					for (i = 0; i < rgba.length; i++) {
-						var colors = GetColors($(rgba[i]).text());
-						var r = colors['r'];
-						var g = colors['g'];
-						var b = colors['b'];
-						var a = ui.value;
-
-						var rgbaValue = GetRGBA(r, g, b, a);
-						$(rgba[i]).css('background-color', rgbaValue).text(rgbaValue);
-
-						var hexValue = ConvertToHexColor(r, g, b, a);
-						$(hex[i]).css('background-color', hexValue).text(hexValue);
-					}
-				}
-			});
-
-			function GetRGBA(r, g, b, a) {
-				return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
-			}
-		
-			function GetColors(rgba) {
-				var x = rgba.replace('rgba(', '').replace(')', '').split(',');
-				var colors = {'r': x[0], 'g': x[1], 'b': x[2], 'a': x[3]};
-				return colors;
-			}
-			
-			function ConvertToHexColor(r, g, b, a) {
-				var decR = ConvertToHex(r, a);
-				var decG = ConvertToHex(g, a);
-				var decB = ConvertToHex(b, a);
-				return '#' + decR + decG + decB;
-			}
-
-			function ConvertToHex(dec, alpha) {
-				var def = parseInt(dec);
-				var i = def + (255 - def) * (1 - alpha);
-				return Math.round(i).toString(16);
-			}
-
-			$(document).on('click', '.box', function() {
-				var text = $(this).text();
-				
-				$(this).empty().append("<input class='value' type='text' value='" + text + "'>");
-				$('input.value').select();
-			});
-
-		});
-	</script>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Favorite Colors</title>
+    <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" media="all" />
+    
+    <link rel="icon" type="image/png" href="favicons/favicon_64.png" />
+    <link rel="apple-touch-icon" type="image/png" href="favicons/favicon_57.png" />
+    <link rel="apple-touch-icon" type="image/png" href="favicons/favicon_114.png" sizes="114x114" />
+    <link rel="apple-touch-icon" type="image/png" href="favicons/favicon_72.png" sizes="72x72" />
+    <link rel="apple-touch-icon" type="image/png" href="favicons/favicon_144.png" sizes="144x144" />
+    <link rel="shortcut icon" href="favicon.ico">
+  </head>
+  <body>
+    <div class="container color-area">
+      <div class="row">
+        <div class="span1 min">0.0</div>
+        <div class="span1 offset10 text-right max">1.0</div>
+      </div>
+      <div class="row">
+        <div class="span12">
+          <div id="slider-range-min"></div>
+        </div>
+      </div>
+      <div class="row"></div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
 </html>
