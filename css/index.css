@@ -1,0 +1,102 @@
+@charset 'utf-8';
+
+body {
+	font-family: 'Source Code Pro', sans-serif;
+	padding-top: 10px;
+}
+
+.row {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.box {
+	padding: 10px 0;
+	background: rgba(255, 255, 255, 1.0);
+	box-shadow: 3px 3px rgba(0, 0, 0, 0.1);
+	text-align: center;
+	border-radius: 10px;
+	/*border: 1px solid rgba(0, 0, 0, 0.1);*/
+}
+
+/*
+.hex1 {
+	background: #f6d4d8;
+}
+
+.hex2 {
+	background: #fcf1d3;
+}
+
+.hex3 {
+	background: #fffbd5;
+}
+
+.hex4 {
+	background: #eef5d3;
+}
+
+.hex5 {
+	background: #c6eddb;
+}
+
+.hex6 {
+	background: #c9e8f1;
+}
+
+.hex7 {
+	background: #cbe6f3;
+}
+
+.hex8 {
+	background: #dedfef;
+}
+
+.hex9 {
+	background: #edd0e5;
+}
+
+.hex10 {
+	background: #f3d1e5;
+}
+
+.rgba1 {
+	background: rgba(246,212,216,1.0);
+}
+
+.rgba2 {
+	background: rgba(252,241,211,1.0);
+}
+
+.rgba3 {
+	background: rgba(255,251,213,1.0);
+}
+
+.rgba4 {
+	background: rgba(238,245,211,1.0);
+}
+
+.rgba5 {
+	background: rgba(198,237,219,1.0);
+}
+
+.rgba6 {
+	background: rgba(201,232,241,1.0);
+}
+
+.rgba7 {
+	background: rgba(203,230,243,1.0);
+}
+
+.rgba8 {
+	background: rgba(222,223,239,1.0);
+}
+
+.rgba9 {
+	background: rgba(237,208,229,1.0);
+}
+
+.rgba10 {
+	background: rgba(243,209,229,1.0);
+}
+*/

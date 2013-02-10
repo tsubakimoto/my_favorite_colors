@@ -3,117 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>My Favorite Colors</title>
+	<link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="all" />
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-	<style type="text/css">
-		body {
-			/*	
-			background: rgba(227, 227, 227, 0.7);
-			*/
-			padding-top: 10px;
-		}
-		
-		.row {
-			margin-top: 10px;
-			margin-bottom: 10px;
-		}
-		
-		.box {
-			padding: 10px 0;
-			background: rgba(255, 255, 255, 1.0);
-			box-shadow: 3px 3px rgba(0, 0, 0, 0.1);
-			text-align: center;
-			border-radius: 10px;
-		}
-		
-		.hex1 {
-			background: #f6d4d8;
-		}
-		
-		.hex2 {
-			background: #fcf1d3;
-		}
-		
-		.hex3 {
-			background: #fffbd5;
-		}
-		
-		.hex4 {
-			background: #eef5d3;
-		}
-		
-		.hex5 {
-			background: #c6eddb;
-		}
-		
-		.hex6 {
-			background: #c9e8f1;
-		}
-		
-		.hex7 {
-			background: #cbe6f3;
-		}
-		
-		.hex8 {
-			background: #dedfef;
-		}
-		
-		.hex9 {
-			background: #edd0e5;
-		}
-		
-		.hex10 {
-			background: #f3d1e5;
-		}
-		
-		.rgba1 {
-			background: rgba(246,212,216,1.0);
-		}
-		
-		.rgba2 {
-			background: rgba(252,241,211,1.0);
-		}
-		
-		.rgba3 {
-			background: rgba(255,251,213,1.0);
-		}
-		
-		.rgba4 {
-			background: rgba(238,245,211,1.0);
-		}
-		
-		.rgba5 {
-			background: rgba(198,237,219,1.0);
-		}
-		
-		.rgba6 {
-			background: rgba(201,232,241,1.0);
-		}
-		
-		.rgba7 {
-			background: rgba(203,230,243,1.0);
-		}
-		
-		.rgba8 {
-			background: rgba(222,223,239,1.0);
-		}
-		
-		.rgba9 {
-			background: rgba(237,208,229,1.0);
-		}
-		
-		.rgba10 {
-			background: rgba(243,209,229,1.0);
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/index.css" media="all" />
 </head>
 <body>
-	<div class="container">
+	<div class="container color-area">
 		<div class="row">
 			<div class="span12">
 				<div id="slider-range-min"></div>
 			</div>
 		</div>
+		<!--
 		<div class="row">
 			<div class="span6 box hex hex1">#f6d4d8</div>
 			<div class="span6 box rgba rgba1">rgba(246,212,216,1.0)</div>
@@ -154,11 +56,50 @@
 			<div class="span6 box hex hex10">#f3d1e5</div>
 			<div class="span6 box rgba rgba10">rgba(243,209,229,1.0)</div>
 		</div>
+		-->
 	</div>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			
+			$(function() {
+				var hex = new Array(
+					'#f6d4d8'
+					, '#fcf1d3'
+					, '#fffbd5'
+					, '#eef5d3'
+					, '#c6eddb'
+					, '#c9e8f1'
+					, '#cbe6f3'
+					, '#dedfef'
+					, '#edd0e5'
+					, '#f3d1e5'
+				);
+				
+				var rgba = new Array(
+					'rgba(246, 212, 216, 1.0)'
+					, 'rgba(252, 241, 211, 1.0)'
+					, 'rgba(255, 251, 213, 1.0)'
+					, 'rgba(238, 245, 211, 1.0)'
+					, 'rgba(198, 237, 219, 1.0)'
+					, 'rgba(201, 232, 241, 1.0)'
+					, 'rgba(203, 230, 243, 1.0)'
+					, 'rgba(222, 223, 239, 1.0)'
+					, 'rgba(237, 208, 229, 1.0)'
+					, 'rgba(243, 209, 229, 1.0)'
+				);
+				
+				for (var i = 0; i < rgba.length - 1; i++) {
+					var hexClass = 'hex' + (i + 1);
+					var rgbaClass = 'rgba' + (i + 1);
+					var divRow = "<div class='row'><div class='span6 box hex " + hexClass + "'></div><div class='span6 box rgba " + rgbaClass + "'></div>";
+					
+					$('.color-area').append(divRow);
+					$('.' + hexClass).text(hex[i]).css('background-color', hex[i]);
+					$('.' + rgbaClass).text(rgba[i]).css('background-color', rgba[i]);
+				}
+			});
 			
 			$('#slider-range-min').slider({
 				range: 'min'
