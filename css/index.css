@@ -26,6 +26,10 @@ body {
 	border-radius: 10px;
 }
 
+#color-tab {
+	margin-bottom: 0;
+}
+
 /* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
 	.hex {
