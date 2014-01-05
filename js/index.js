@@ -4,10 +4,44 @@ $(function() {
    * 画面表示時イベント
    */
   $.getJSON("/js/data.json", function(data) {
-    MakePanel(data.Items);
+    MakeTabPanes(data.Items);
+    MakeColorTabs(data.Items);
+    MakeColorPanel(data.Items);
   });
   
-  function MakePanel(rgbaArray) {
+  /*
+   * タブペインを生成する
+   */
+  function MakeTabPanes(data) {
+    var tabPanes = $('#tab-panes');
+    for (var i = 0; i < data.length; i++) {
+      var tabPane = $('<div>').addClass('tab-pane').attr('id', data[i].Name);
+      if (i == 0) {
+        tabPane.addClass('active');
+      }
+      tabPanes.append(tabPane);
+    }
+  }
+  
+  /*
+   * カラータブを生成する
+   */
+  function MakeColorTabs(data) {
+    var colorTabs = $('#color-tabs');
+    for (var i = 0; i < data.length; i++) {
+      var href = '#' + data[i].Name;
+      var colorTab = $('<li>').append($('<a>').attr('href', href).text(data[i].Name));
+      if (i == 0) {
+        colorTab.addClass('active');
+      }
+      colorTabs.append(colorTab);
+    }
+  }
+  
+  /*
+   * カラーパネルを生成する
+   */
+  function MakeColorPanel(rgbaArray) {
     for (var i = 0; i < rgbaArray.length; i++) {
       var rgba = rgbaArray[i].Colors;
       
@@ -42,35 +76,6 @@ $(function() {
       }
     }
   }
-  
-  /*
-   * スライダー動作設定
-   */
-  $('#slider-range-min').slider({
-    range: 'min'
-    , min: 0.0
-    , max: 1.0
-    , step: 0.1
-    , value: 1.0
-    , slide: function(event, ui) {
-      var hex = $('body').find('.hex');
-      var rgba = $('body').find('.rgba');
-      
-      for (i = 0; i < rgba.length; i++) {
-        var colors = GetColors($(rgba[i]).text());
-        var r = colors['r'];
-        var g = colors['g'];
-        var b = colors['b'];
-        var a = ui.value;
-
-        var rgbaValue = GetRGBA(r, g, b, a);
-        $(rgba[i]).css('background-color', rgbaValue).text(rgbaValue);
-
-        var hexValue = ConvertToHexColor(r, g, b, a);
-        $(hex[i]).css('background-color', hexValue).text(hexValue);
-      }
-    }
-  });
   
   /*
    * rgba形式に整形する
@@ -109,6 +114,35 @@ $(function() {
   }
   
   /*
+   * スライダー動作設定
+   */
+  $('#slider-range-min').slider({
+    range: 'min'
+    , min: 0.0
+    , max: 1.0
+    , step: 0.1
+    , value: 1.0
+    , slide: function(event, ui) {
+      var hex = $('body').find('.hex');
+      var rgba = $('body').find('.rgba');
+      
+      for (var i = 0; i < rgba.length; i++) {
+        var colors = GetColors($(rgba[i]).text());
+        var r = colors['r'];
+        var g = colors['g'];
+        var b = colors['b'];
+        var a = ui.value;
+
+        var rgbaValue = GetRGBA(r, g, b, a);
+        $(rgba[i]).css('background-color', rgbaValue).text(rgbaValue);
+
+        var hexValue = ConvertToHexColor(r, g, b, a);
+        $(hex[i]).css('background-color', hexValue).text(hexValue);
+      }
+    }
+  });
+  
+  /*
    * 色ブロッククリック時イベント
    */
   $(document).on('click', '.box', function() {
@@ -120,9 +154,9 @@ $(function() {
   /*
    * タブクリック時イベント
    */
-  $('#color-tab a').click(function (e) {
+  $(document).on('click', '#color-tabs a', function(e) {
     e.preventDefault();
     $(this).tab('show');
-  })
+  });
   
 });
