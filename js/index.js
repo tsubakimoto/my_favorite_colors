@@ -3,48 +3,44 @@ $(function() {
   /*
    * 画面表示時イベント
    */
-  var rgbaArray = [];
+  $.getJSON("/js/data.json", function(data) {
+    MakePanel(data.Items);
+  });
   
-  // Push to array
-  rgbaArray.push(common);
-  rgbaArray.push(trendcolors2013);
-  rgbaArray.push(trendcolors2014);
-  
-  for (var i = 0; i < rgbaArray.length; i++) {
-    var rgba = rgbaArray[i];
-    
-    for (var j = 1; j < rgba.length; j++) {
+  function MakePanel(rgbaArray) {
+    for (var i = 0; i < rgbaArray.length; i++) {
+      var rgba = rgbaArray[i].Colors;
       
-      var colors = GetColors(rgba[j]);
-      var hexValue = ConvertToHexColor(colors['r'], colors['g'], colors['b'], colors['a']);
-      
-      var hexSpan = $('<span>').text(hexValue);
-      var rgbaSpan = $('<span>').text(rgba[j]);
-      
-      var divHex = $('<div>')
-                      .addClass('span6')
-                      .addClass('box')
-                      .addClass('hex')
-                      .addClass('hex' + i + '-' + j)
-                      .css('background-color', hexValue)
-                      .append(hexSpan);
-      
-      var divRgba = $('<div>')
-                      .addClass('span6')
-                      .addClass('box')
-                      .addClass('rgba')
-                      .addClass('rgba' + i + '-' + j)
-                      .css('background-color', rgba[j])
-                      .append(rgbaSpan);
-      
-      $('#' + rgba[0]).append($('<div>')
-                                .addClass('row')
-                                .append(divHex)
-                                .append(divRgba)
-                              );
-      
+      for (var j = 0; j < rgba.length; j++) {
+        var colors = GetColors(rgba[j]);
+        var hexValue = ConvertToHexColor(colors['r'], colors['g'], colors['b'], colors['a']);
+        
+        var hexSpan = $('<span>').text(hexValue);
+        var rgbaSpan = $('<span>').text(rgba[j]);
+        
+        var divHex = $('<div>')
+                        .addClass('span6')
+                        .addClass('box')
+                        .addClass('hex')
+                        .addClass('hex' + i + '-' + j)
+                        .css('background-color', hexValue)
+                        .append(hexSpan);
+        
+        var divRgba = $('<div>')
+                        .addClass('span6')
+                        .addClass('box')
+                        .addClass('rgba')
+                        .addClass('rgba' + i + '-' + j)
+                        .css('background-color', rgba[j])
+                        .append(rgbaSpan);
+        
+        $('#' + rgbaArray[i].Name).append($('<div>')
+                                  .addClass('row')
+                                  .append(divHex)
+                                  .append(divRgba)
+                                );
+      }
     }
-    
   }
   
   /*
