@@ -3,7 +3,7 @@ $(function() {
   /*
    * 画面表示時イベント
    */
-  $.getJSON("/js/data.json", function(data) {
+  $.getJSON('/js/data.json', function(data) {
     MakeTabPanes(data.Items);
     MakeColorTabs(data.Items);
     MakeColorPanel(data.Items);
@@ -41,16 +41,15 @@ $(function() {
   /*
    * カラーパネルを生成する
    */
-  function MakeColorPanel(rgbaArray) {
-    for (var i = 0; i < rgbaArray.length; i++) {
-      var rgba = rgbaArray[i].Colors;
+  function MakeColorPanel(data) {
+    for (var i = 0; i < data.length; i++) {
+      var colors = data[i].Colors;
       
-      for (var j = 0; j < rgba.length; j++) {
-        var colors = GetColors(rgba[j]);
-        var hexValue = ConvertToHexColor(colors['r'], colors['g'], colors['b'], colors['a']);
-        
+      for (var j = 0; j < colors.length; j++) {
+        var color = GetColors(colors[j]);
+        var hexValue = ConvertToHexColor(color['r'], color['g'], color['b'], color['a']);
         var hexSpan = $('<span>').text(hexValue);
-        var rgbaSpan = $('<span>').text(rgba[j]);
+        var rgbaSpan = $('<span>').text(colors[j]);
         
         var divHex = $('<div>')
                         .addClass('span6')
@@ -65,10 +64,10 @@ $(function() {
                         .addClass('box')
                         .addClass('rgba')
                         .addClass('rgba' + i + '-' + j)
-                        .css('background-color', rgba[j])
+                        .css('background-color', colors[j])
                         .append(rgbaSpan);
         
-        $('#' + rgbaArray[i].Name).append($('<div>')
+        $('#' + data[i].Name).append($('<div>')
                                   .addClass('row')
                                   .append(divHex)
                                   .append(divRgba)
