@@ -5,59 +5,14 @@ $(function() {
    */
   var rgbaArray = [];
   
-  // Common Colors
-  var common = new Array(
-    'common'
-    , 'rgba(227, 134, 146, 1.0)'
-    , 'rgba(246, 213, 128, 1.0)'
-    , 'rgba(255, 242, 128, 1.0)'
-    , 'rgba(207, 226, 131, 1.0)'
-    , 'rgba(100, 201, 155, 1.0)'
-    , 'rgba(107, 190, 213, 1.0)'
-    , 'rgba(110, 183, 219, 1.0)'
-    , 'rgba(164, 169, 207, 1.0)'
-    , 'rgba(201, 127, 180, 1.0)'
-    , 'rgba(219, 123, 177, 1.0)'
-  );
-  
-  // 2013 Trend Colors
-  var trendcolors2013 = new Array(
-    'trendcolors2013'
-    , 'rgba(0, 147, 117, 1.0)'
-    , 'rgba(155, 189, 170, 1.0)'
-    , 'rgba(182, 204, 61, 1.0)'
-    , 'rgba(177, 134, 183, 1.0)'
-    , 'rgba(227, 52, 58, 1.0)'
-    , 'rgba(255, 136, 85, 1.0)'
-    , 'rgba(252, 216, 88, 1.0)'
-    , 'rgba(121, 160, 192, 1.0)'
-    , 'rgba(240, 210, 193, 1.0)'
-    , 'rgba(36, 67, 115, 1.0)'
-  );
-  
-  // 2014 Trend Colors
-  var trendcolors2014 = new Array(
-    'trendcolors2014'
-    , 'rgba(172, 203, 232, 1.0)'
-    , 'rgba(146, 149, 202, 1.0)'
-    , 'rgba(158, 206, 180, 1.0)'
-    , 'rgba(169, 178, 177, 1.0)'
-    , 'rgba(205, 180, 140, 1.0)'
-    , 'rgba(255, 214, 2, 1.0)'
-    , 'rgba(230, 102, 101, 1.0)'
-    , 'rgba(244, 125, 67, 1.0)'
-    , 'rgba(174, 112, 175, 1.0)'
-    , 'rgba(7, 107, 182, 1.0)'
-  );
-  
   // Push to array
   rgbaArray.push(common);
   rgbaArray.push(trendcolors2013);
   rgbaArray.push(trendcolors2014);
   
   for (var i = 0; i < rgbaArray.length; i++) {
-    
     var rgba = rgbaArray[i];
+    
     for (var j = 1; j < rgba.length; j++) {
       
       var colors = GetColors(rgba[j]);
