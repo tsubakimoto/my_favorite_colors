@@ -4,36 +4,27 @@ $(function() {
    * 画面表示時イベント
    */
   $.getJSON('/js/data.json', function(data) {
-    MakeTabPanes(data.Items);
-    MakeColorTabs(data.Items);
+    MakePanesAndTabs(data.Items);
     MakeColorPanel(data.Items);
   });
   
   /*
-   * タブペインを生成する
+   * タブペイン、カラータブを生成する
    */
-  function MakeTabPanes(data) {
+  function MakePanesAndTabs(data) {
     var tabPanes = $('#tab-panes');
+    var colorTabs = $('#color-tabs');
+    
     for (var i = 0; i < data.length; i++) {
       var tabPane = $('<div>').addClass('tab-pane').attr('id', data[i].Name);
+      var colorTab = $('<li>').append($('<a>').attr('href', '#' + data[i].Name).text(data[i].Name));
+      
       if (i == 0) {
         tabPane.addClass('active');
-      }
-      tabPanes.append(tabPane);
-    }
-  }
-  
-  /*
-   * カラータブを生成する
-   */
-  function MakeColorTabs(data) {
-    var colorTabs = $('#color-tabs');
-    for (var i = 0; i < data.length; i++) {
-      var href = '#' + data[i].Name;
-      var colorTab = $('<li>').append($('<a>').attr('href', href).text(data[i].Name));
-      if (i == 0) {
         colorTab.addClass('active');
       }
+      
+      tabPanes.append(tabPane);
       colorTabs.append(colorTab);
     }
   }
@@ -46,8 +37,7 @@ $(function() {
       var colors = data[i].Colors;
       
       for (var j = 0; j < colors.length; j++) {
-        var color = GetColors(colors[j]);
-        var hexValue = ConvertToHexColor(color['r'], color['g'], color['b'], color['a']);
+        var hexValue = ConvertToHexColor(GetColors(colors[j]));
         var hexSpan = $('<span>').text(hexValue);
         var rgbaSpan = $('<span>').text(colors[j]);
         
@@ -79,8 +69,8 @@ $(function() {
   /*
    * rgba形式に整形する
    */
-  function GetRGBA(r, g, b, a) {
-    return 'rgba(' + r + ', ' + g + ', ' + b + ', ' + a.toFixed(1) + ')';
+  function GetRGBA(color) {
+    return 'rgba(' + color['r'] + ', ' + color['g'] + ', ' + color['b'] + ', ' + color['a'].toFixed(1) + ')';
   }
   
   /*
@@ -95,10 +85,10 @@ $(function() {
   /*
    * rgba値を16進数に形式変換する
    */
-  function ConvertToHexColor(r, g, b, a) {
-    var decR = ConvertToHex(r, a);
-    var decG = ConvertToHex(g, a);
-    var decB = ConvertToHex(b, a);
+  function ConvertToHexColor(color) {
+    var decR = ConvertToHex(color['r'], color['a']);
+    var decG = ConvertToHex(color['g'], color['a']);
+    var decB = ConvertToHex(color['b'], color['a']);
     return '#' + decR + decG + decB;
   }
   
@@ -126,16 +116,13 @@ $(function() {
       var rgba = $('body').find('.rgba');
       
       for (var i = 0; i < rgba.length; i++) {
-        var colors = GetColors($(rgba[i]).text());
-        var r = colors['r'];
-        var g = colors['g'];
-        var b = colors['b'];
-        var a = ui.value;
+        var color = GetColors($(rgba[i]).text());
+        color['a'] = ui.value;
 
-        var rgbaValue = GetRGBA(r, g, b, a);
+        var rgbaValue = GetRGBA(color);
         $(rgba[i]).css('background-color', rgbaValue).text(rgbaValue);
 
-        var hexValue = ConvertToHexColor(r, g, b, a);
+        var hexValue = ConvertToHexColor(color);
         $(hex[i]).css('background-color', hexValue).text(hexValue);
       }
     }
