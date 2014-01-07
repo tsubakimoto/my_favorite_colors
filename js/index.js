@@ -3,7 +3,7 @@ $(function() {
   /*
    * 画面表示時イベント
    */
-  $.getJSON('/js/data.json', function(data) {
+  $.getJSON('./js/data.json', function(data) {
     MakePanesAndTabs(data.Items);
     MakeColorPanel(data.Items);
   });
