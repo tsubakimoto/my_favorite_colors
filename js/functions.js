@@ -33,19 +33,19 @@ function MakeColorPanel(data) {
     var colors = data[i].Colors;
     
     for (var j = 0; j < colors.length; j++) {
-      var hexValue = ConvertToHexColor(GetColorFromRgba(colors[j]));
+      var rgba = FormatToRgba(ConvertToRgbaColor(colors[j]));
       
       var divHex = $('<div>')
                       .addClass('span6 box hex')
                       .addClass('hex' + i + '-' + j)
-                      .css('background-color', hexValue)
-                      .append($('<span>').text(hexValue));
+                      .css('background-color', '#' + colors[j])
+                      .append($('<span>').text('#' + colors[j]));
       
       var divRgba = $('<div>')
                       .addClass('span6 box rgba')
                       .addClass('rgba' + i + '-' + j)
-                      .css('background-color', colors[j])
-                      .append($('<span>').text(colors[j]));
+                      .css('background-color', rgba)
+                      .append($('<span>').text(rgba));
       
       $('#' + data[i].Name).append($('<div>').addClass('row').append(divHex).append(divRgba));
     }
@@ -58,6 +58,40 @@ function MakeColorPanel(data) {
  *
  **************************************************/
 
+/*
+ * 16進数をrgba値に整形する
+ */
+function ConvertToRgbaColor(hex) {
+  var color = {};
+  if(hex.length == 3) {
+    // #nnn の場合
+    color['r'] = SubstringColor(hex, 0, 1, true);
+    color['g'] = SubstringColor(hex, 1, 2, true);
+    color['b'] = SubstringColor(hex, 2, 3, true);
+  } else if (hex.length == 6) {
+    // #nnnnnn の場合
+    color['r'] = SubstringColor(hex, 0, 2, true);
+    color['g'] = SubstringColor(hex, 2, 4, true);
+    color['b'] = SubstringColor(hex, 4, 6, true);
+  } else {
+    return '';
+  }
+  color['a'] = 1.0;
+  return color;
+}
+
+/*
+ * 16進数の各色を取り出す
+ */
+function SubstringColor(hex, from, to, conv) {
+  var s = hex.substring(from, to);
+  if (s.length == 1) {
+    s = s + s;
+  } else if (2 < s.length) {
+    return '';
+  }
+  return conv == true ? parseInt(s, 16) : s;
+}
 
 /**************************************************
  *
@@ -77,8 +111,8 @@ function FormatToRgba(color) {
  */
 function GetColorFromRgba(rgba) {
   var x = rgba.replace('rgba(', '').replace(')', '').split(',');
-  var colors = {'r': x[0], 'g': x[1], 'b': x[2], 'a': x[3]};
-  return colors;
+  var color = {'r': x[0], 'g': x[1], 'b': x[2], 'a': x[3]};
+  return color;
 }
 
 /*
