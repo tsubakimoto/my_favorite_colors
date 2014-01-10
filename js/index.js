@@ -37,7 +37,7 @@ $(function() {
       var colors = data[i].Colors;
       
       for (var j = 0; j < colors.length; j++) {
-        var hexValue = ConvertToHexColor(GetColors(colors[j]));
+        var hexValue = ConvertToHexColor(GetColorFromRgba(colors[j]));
         var hexSpan = $('<span>').text(hexValue);
         var rgbaSpan = $('<span>').text(colors[j]);
         
@@ -69,14 +69,14 @@ $(function() {
   /*
    * rgba形式に整形する
    */
-  function GetRGBA(color) {
+  function FormatToRgba(color) {
     return 'rgba(' + color['r'] + ', ' + color['g'] + ', ' + color['b'] + ', ' + color['a'].toFixed(1) + ')';
   }
   
   /*
    * rgba値から各色値を取得する
    */
-  function GetColors(rgba) {
+  function GetColorFromRgba(rgba) {
     var x = rgba.replace('rgba(', '').replace(')', '').split(',');
     var colors = {'r': x[0], 'g': x[1], 'b': x[2], 'a': x[3]};
     return colors;
@@ -116,10 +116,10 @@ $(function() {
       var rgba = $('body').find('.rgba');
       
       for (var i = 0; i < rgba.length; i++) {
-        var color = GetColors($(rgba[i]).text());
+        var color = GetColorFromRgba($(rgba[i]).text());
         color['a'] = ui.value;
 
-        var rgbaValue = GetRGBA(color);
+        var rgbaValue = FormatToRgba(color);
         $(rgba[i]).css('background-color', rgbaValue).text(rgbaValue);
 
         var hexValue = ConvertToHexColor(color);
