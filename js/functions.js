@@ -33,14 +33,21 @@ function MakeColorPanel(data) {
     var colors = data[i].Colors;
     
     for (var j = 0; j < colors.length; j++) {
+      // 16進数色をRGBA色に変換
       var rgba = FormatToRgba(ConvertToRgbaColor(colors[j]));
+      if (rgba == '') {
+        // 未指定の色値は無視
+        continue;
+      }
       
+      // 16進数色エリアを作成
       var divHex = $('<div>')
                       .addClass('span6 box hex')
                       .addClass('hex' + i + '-' + j)
                       .css('background-color', '#' + colors[j])
                       .append($('<span>').text('#' + colors[j]));
       
+      // RGBA色エリアを作成
       var divRgba = $('<div>')
                       .addClass('span6 box rgba')
                       .addClass('rgba' + i + '-' + j)
@@ -63,7 +70,7 @@ function MakeColorPanel(data) {
  */
 function ConvertToRgbaColor(hex) {
   var color = {};
-  if(hex.length == 3) {
+  if (hex.length == 3) {
     // #nnn の場合
     color['r'] = SubstringColor(hex, 0, 1, true);
     color['g'] = SubstringColor(hex, 1, 2, true);
@@ -84,13 +91,17 @@ function ConvertToRgbaColor(hex) {
  * 16進数の各色を取り出す
  */
 function SubstringColor(hex, from, to, conv) {
-  var s = hex.substring(from, to);
-  if (s.length == 1) {
-    s = s + s;
-  } else if (2 < s.length) {
+  if (hex == '') {
     return '';
+  } else {
+    var s = hex.substring(from, to);
+    if (s.length == 1) {
+      s = s + s;
+    } else if (2 < s.length) {
+      return '';
+    }
+    return conv == true ? parseInt(s, 16) : s;
   }
-  return conv == true ? parseInt(s, 16) : s;
 }
 
 /**************************************************
@@ -103,7 +114,11 @@ function SubstringColor(hex, from, to, conv) {
  * rgba形式に整形する
  */
 function FormatToRgba(color) {
-  return 'rgba(' + color['r'] + ', ' + color['g'] + ', ' + color['b'] + ', ' + color['a'].toFixed(1) + ')';
+  if (color == '') {
+    return '';
+  } else {
+    return 'rgba(' + color['r'] + ', ' + color['g'] + ', ' + color['b'] + ', ' + color['a'].toFixed(1) + ')';
+  }
 }
 
 /*
