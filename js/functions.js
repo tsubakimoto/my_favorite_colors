@@ -34,30 +34,20 @@ function MakeColorPanel(data) {
     
     for (var j = 0; j < colors.length; j++) {
       var hexValue = ConvertToHexColor(GetColorFromRgba(colors[j]));
-      var hexSpan = $('<span>').text(hexValue);
-      var rgbaSpan = $('<span>').text(colors[j]);
       
       var divHex = $('<div>')
-                      .addClass('span6')
-                      .addClass('box')
-                      .addClass('hex')
+                      .addClass('span6 box hex')
                       .addClass('hex' + i + '-' + j)
                       .css('background-color', hexValue)
-                      .append(hexSpan);
+                      .append($('<span>').text(hexValue));
       
       var divRgba = $('<div>')
-                      .addClass('span6')
-                      .addClass('box')
-                      .addClass('rgba')
+                      .addClass('span6 box rgba')
                       .addClass('rgba' + i + '-' + j)
                       .css('background-color', colors[j])
-                      .append(rgbaSpan);
+                      .append($('<span>').text(colors[j]));
       
-      $('#' + data[i].Name).append($('<div>')
-                                .addClass('row')
-                                .append(divHex)
-                                .append(divRgba)
-                              );
+      $('#' + data[i].Name).append($('<div>').addClass('row').append(divHex).append(divRgba));
     }
   }
 }
