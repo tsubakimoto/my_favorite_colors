@@ -81,8 +81,11 @@ $(function() {
    */
   $(document).on('click', '.done-btn', function(e) {
     var color = $(this).prev().val();
-    var parentClass = $(this).parent().parent().attr('class').split(' ')[3];
-    console.log(parentClass);
+    var box = $(this).parent().parent();
+    box.append($('<span>').addClass('color-code').text(color)).find('.input-append').remove();
+    if (ChangeColor(box.attr('class').split(' ')[3], color) == false) {
+      alert('背景色の変更に失敗しました！');
+    }
   });
   
 });

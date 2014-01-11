@@ -112,6 +112,17 @@ function RemoveTab(tabId) {
   $('#tab-' + tabId).remove();
 }
 
+/*
+ * ボックスの背景色を変更する
+ */
+function ChangeColor(boxClass, color) {
+  if ($('.tab-pane').find('.' + boxClass).length == 0) {
+    return false;
+  } else {
+    $('.' + boxClass).css('background-color', color);
+  }
+}
+
 /**************************************************
  *
  * 16進数色に関する関数
