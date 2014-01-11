@@ -119,7 +119,7 @@ function ChangeColor(boxClass, color) {
   if ($('.tab-pane').find('.' + boxClass).length == 0) {
     return false;
   } else {
-    $('.' + boxClass).css('background-color', color);
+    $('.' + boxClass).css('background-color', '#' + color);
   }
 }
 

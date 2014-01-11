@@ -67,22 +67,23 @@ $(function() {
   /*
    * カラーコードクリック時イベント
    */
-  $(document).on('click', '.color-code', function(e) {
+  $(document).on('click', '.hex .color-code', function(e) {
     var parentClass = $(this).parent().attr('class').split(' ')[3];
-    var div = $('<div>').addClass('input-append');
+    var div = $('<div>').addClass('input-prepend input-append');
+    var a = $('<span>').addClass('add-on').text('#');
     var t = $('<input>').addClass('input-medium').attr('type', 'text').attr('placeholder', 'type and return...');
-    var b = $('<button>').addClass('btn done-btn').text('Done');
-    $('.' + parentClass).append(div.append(t).append(b)).find('.color-code').remove();
+    var b = $('<button>').addClass('btn change-btn').text('Change');
+    $('.' + parentClass).append(div.append(a).append(t).append(b)).find('.color-code').remove();
     t.focus();
   });
   
   /*
    * カラーコード確定時イベント
    */
-  $(document).on('click', '.done-btn', function(e) {
+  $(document).on('click', '.change-btn', function(e) {
     var color = $(this).prev().val();
     var box = $(this).parent().parent();
-    box.append($('<span>').addClass('color-code').text(color)).find('.input-append').remove();
+    box.append($('<span>').addClass('color-code').text('#' + color)).find('.input-append').remove();
     if (ChangeColor(box.attr('class').split(' ')[3], color) == false) {
       alert('背景色の変更に失敗しました！');
     }
