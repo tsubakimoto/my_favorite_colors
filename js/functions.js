@@ -73,14 +73,14 @@ function GetNewColorArea(type, tabCount, index, color) {
             .addClass('span6 box ' + type)
             .addClass(type + tabCount + '-' + index)
             .css('background-color', color)
-            .append($('<span>').text(color));
+            .append($('<span>').text(color).addClass('color-code'));
 }
 
 /*
  * 新しいタブを追加する
  */
 function AddTab() {
-  var tabCount = $('#color-tabs').find('li').length;
+  var tabCount = $('#color-tabs').find('li').length - 1;
   var name = 'newtab-' + tabCount;
   var tabPane = GetNewPane(name);
   var colorTab = GetNewTab(name);

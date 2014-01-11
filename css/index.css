@@ -26,6 +26,10 @@ body {
 	border-radius: 10px;
 }
 
+.box input {
+  margin-bottom: 0;
+}
+
 #color-tabs {
 	margin-bottom: 0;
 }

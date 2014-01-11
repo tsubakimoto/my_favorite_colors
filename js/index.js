@@ -57,8 +57,32 @@ $(function() {
     }
   });
   
+  /*
+   * タブ削除ボタンクリック時イベント
+   */
   $(document).on('click', '.close-tab', function(e) {
     RemoveTab($(this).parent().parent().attr('id'));
+  });
+  
+  /*
+   * カラーコードクリック時イベント
+   */
+  $(document).on('click', '.color-code', function(e) {
+    var parentClass = $(this).parent().attr('class').split(' ')[3];
+    var div = $('<div>').addClass('input-append');
+    var t = $('<input>').addClass('input-medium').attr('type', 'text').attr('placeholder', 'type and return...');
+    var b = $('<button>').addClass('btn done-btn').text('Done');
+    $('.' + parentClass).append(div.append(t).append(b)).find('.color-code').remove();
+    t.focus();
+  });
+  
+  /*
+   * カラーコード確定時イベント
+   */
+  $(document).on('click', '.done-btn', function(e) {
+    var color = $(this).prev().val();
+    var parentClass = $(this).parent().parent().attr('class').split(' ')[3];
+    console.log(parentClass);
   });
   
 });
