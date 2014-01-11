@@ -36,7 +36,9 @@ function GetNewPane(paneName) {
  * 新しいカラータブを取得する
  */
 function GetNewTab(tabName) {
-  return $('<li>').attr('id', 'tab' + tabName).append($('<a>').attr('href', '#' + tabName).text(tabName));
+  var closeBtn = $('<span>').addClass('close-tab').append($('<i>').addClass('icon-remove'));
+  var link = $('<a>').attr('href', '#' + tabName).text(tabName).append(closeBtn);
+  return $('<li>').attr('id', 'tab-' + tabName).append(link);
 }
 
 /*
@@ -54,23 +56,60 @@ function MakeColorPanel(data) {
         continue;
       }
       
-      // 16進数色エリアを作成
-      var divHex = $('<div>')
-                      .addClass('span6 box hex')
-                      .addClass('hex' + i + '-' + j)
-                      .css('background-color', '#' + colors[j])
-                      .append($('<span>').text('#' + colors[j]));
-      
-      // RGBA色エリアを作成
-      var divRgba = $('<div>')
-                      .addClass('span6 box rgba')
-                      .addClass('rgba' + i + '-' + j)
-                      .css('background-color', rgba)
-                      .append($('<span>').text(rgba));
-      
-      $('#' + data[i].Name).append($('<div>').addClass('row').append(divHex).append(divRgba));
+      $('#' + data[i].Name)
+        .append($('<div>')
+          .addClass('row')
+          .append(GetNewColorArea('hex', i, j, '#' + colors[j]))
+          .append(GetNewColorArea('rgba', i, j, rgba)));
     }
   }
+}
+
+/*
+ * 新しいカラーパネルを取得する
+ */
+function GetNewColorArea(type, tabCount, index, color) {
+  return $('<div>')
+            .addClass('span6 box ' + type)
+            .addClass(type + tabCount + '-' + index)
+            .css('background-color', color)
+            .append($('<span>').text(color));
+}
+
+/*
+ * 新しいタブを追加する
+ */
+function AddTab() {
+  var tabCount = $('#color-tabs').find('li').length;
+  var name = 'newtab-' + tabCount;
+  var tabPane = GetNewPane(name);
+  var colorTab = GetNewTab(name);
+  $('#tab-panes').append(tabPane);
+  $('#color-tabs').append(colorTab);
+  
+  AddPanel(name, tabCount);
+}
+
+/*
+ * 新しいパネルを追加する
+ */
+function AddPanel(paneId, tabCount) {
+  for (var i = 0; i < 10; i++) {
+      $('#' + paneId)
+        .append($('<div>')
+          .addClass('row')
+          .append(GetNewColorArea('hex', tabCount, i, '#ffffff'))
+          .append(GetNewColorArea('rgba', tabCount, i, 'rgba(255, 255, 255, 1.0)')));
+  }
+}
+
+/*
+ * タブを削除する
+ */
+function RemoveTab(tabId) {
+  console.log(tabId);
+  $('#' + tabId).remove();
+  $('#tab-' + tabId).remove();
 }
 
 /**************************************************

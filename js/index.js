@@ -48,7 +48,17 @@ $(function() {
    */
   $(document).on('click', '#color-tabs a', function(e) {
     e.preventDefault();
-    $(this).tab('show');
+    
+    // タブ追加ボタンか否か
+    if ($(this).parent().attr('id') == 'addtab') {
+      AddTab();
+    } else {
+      $(this).tab('show');
+    }
+  });
+  
+  $(document).on('click', '.close-tab', function(e) {
+    RemoveTab($(this).parent().parent().attr('id'));
   });
   
 });
