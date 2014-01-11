@@ -12,8 +12,8 @@ function MakePanesAndTabs(data) {
   var colorTabs = $('#color-tabs');
   
   for (var i = 0; i < data.length; i++) {
-    var tabPane = $('<div>').addClass('tab-pane').attr('id', data[i].Name);
-    var colorTab = $('<li>').append($('<a>').attr('href', '#' + data[i].Name).text(data[i].Name));
+    var tabPane = GetNewPane(data[i].Name);
+    var colorTab = GetNewTab(data[i].Name);
     
     if (i == 0) {
       tabPane.addClass('active');
@@ -23,6 +23,20 @@ function MakePanesAndTabs(data) {
     tabPanes.append(tabPane);
     colorTabs.append(colorTab);
   }
+}
+
+/*
+ * 新しいタブペインを取得する
+ */
+function GetNewPane(paneName) {
+  return $('<div>').addClass('tab-pane').attr('id', paneName);
+}
+
+/*
+ * 新しいカラータブを取得する
+ */
+function GetNewTab(tabName) {
+  return $('<li>').attr('id', 'tab' + tabName).append($('<a>').attr('href', '#' + tabName).text(tabName));
 }
 
 /*
