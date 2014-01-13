@@ -26,10 +26,10 @@ $(function() {
         color['a'] = ui.value;
 
         var rgbaValue = FormatToRgba(color);
-        $(rgba[i]).css('background-color', rgbaValue).text(rgbaValue);
+        $(rgba[i]).css('background-color', rgbaValue).find('.color-code').text(rgbaValue);
 
         var hexValue = ConvertToHexColor(color);
-        $(hex[i]).css('background-color', hexValue).text(hexValue);
+        $(hex[i]).css('background-color', hexValue).find('.color-code').text(hexValue);
       }
     }
   });
