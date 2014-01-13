@@ -50,7 +50,7 @@ function MakeColorPanel(data) {
     
     for (var j = 0; j < colors.length; j++) {
       // 16進数色をRGBA色に変換
-      var rgba = FormatToRgba(ConvertToRgbaColor(colors[j]));
+      var rgba = FormatToRgba(ConvertToRgbaColor(colors[j], 1.0));
       if (rgba == '') {
         // 未指定の色値は無視
         continue;
@@ -115,12 +115,30 @@ function RemoveTab(tabId) {
 /*
  * ボックスの背景色を変更する
  */
-function ChangeColor(boxClass, color) {
-  if ($('.tab-pane').find('.' + boxClass).length == 0) {
+function ChangeColor(hexBox, color) {
+  if ($('.tab-pane').find('.' + hexBox).length == 0) {
     return false;
-  } else {
-    $('.' + boxClass).css('background-color', '#' + color);
   }
+  $('.' + hexBox).css('background-color', '#' + color);
+  
+  // RGBAボックスを変更
+  var rgbaBox = '.' + hexBox.replace('hex', 'rgba');
+  if ($('.tab-pane').find(rgbaBox).length == 0) {
+    return false;
+  }
+  
+  // 透明度の抽出
+  var alpha = $(rgbaBox).css('background-color').split(',')[3];
+  alpha = alpha == undefined ? 1.0 : NumRound(alpha.split(')')[0].trim());
+  
+  // RGBA色値に変換
+  var rgba = FormatToRgba(ConvertToRgbaColor(color, alpha));
+  if (rgba == '') {
+    return false;
+  }
+  $(rgbaBox).css('background-color', rgba).find('.color-code').text(rgba);
+  
+  return true;
 }
 
 /**************************************************
@@ -132,7 +150,7 @@ function ChangeColor(boxClass, color) {
 /*
  * 16進数をrgba値に整形する
  */
-function ConvertToRgbaColor(hex) {
+function ConvertToRgbaColor(hex, alpha) {
   var color = {};
   if (hex.length == 3) {
     // #nnn の場合
@@ -147,7 +165,7 @@ function ConvertToRgbaColor(hex) {
   } else {
     return '';
   }
-  color['a'] = 1.0;
+  color['a'] = alpha;
   return color;
 }
 
@@ -166,6 +184,10 @@ function SubstringColor(hex, from, to, conv) {
     }
     return conv == true ? parseInt(s, 16) : s;
   }
+}
+
+function NumRound(val) {
+  return Math.round(parseFloat(val) * 10) / 10;
 }
 
 /**************************************************
