@@ -51,7 +51,7 @@ function MakeColorPanel(data) {
     for (var j = 0; j < colors.length; j++) {
       // 16進数色をRGBA色に変換
       var rgba = FormatToRgba(ConvertToRgbaColor(colors[j], 1.0));
-      if (rgba == '') {
+      if (rgba == false) {
         // 未指定の色値は無視
         continue;
       }
@@ -133,7 +133,7 @@ function ChangeColor(hexBox, color) {
   
   // RGBA色値に変換
   var rgba = FormatToRgba(ConvertToRgbaColor(color, alpha));
-  if (rgba == '') {
+  if (rgba == false) {
     return false;
   }
   $(rgbaBox).css('background-color', rgba).find('.color-code').text(rgba);
@@ -163,7 +163,7 @@ function ConvertToRgbaColor(hex, alpha) {
     color['g'] = SubstringColor(hex, 2, 4, true);
     color['b'] = SubstringColor(hex, 4, 6, true);
   } else {
-    return '';
+    return false;
   }
   color['a'] = alpha;
   return color;
@@ -174,16 +174,15 @@ function ConvertToRgbaColor(hex, alpha) {
  */
 function SubstringColor(hex, from, to, conv) {
   if (hex == '') {
-    return '';
-  } else {
-    var s = hex.substring(from, to);
-    if (s.length == 1) {
-      s = s + s;
-    } else if (2 < s.length) {
-      return '';
-    }
-    return conv == true ? parseInt(s, 16) : s;
+    return false;
   }
+  var s = hex.substring(from, to);
+  if (s.length == 1) {
+    s = s + s;
+  } else if (2 < s.length) {
+    return false;
+  }
+  return conv == true ? parseInt(s, 16) : s;
 }
 
 function NumRound(val) {
@@ -201,7 +200,7 @@ function NumRound(val) {
  */
 function FormatToRgba(color) {
   if (color == '') {
-    return '';
+    return false;
   } else {
     return 'rgba(' + color['r'] + ', ' + color['g'] + ', ' + color['b'] + ', ' + color['a'].toFixed(1) + ')';
   }
